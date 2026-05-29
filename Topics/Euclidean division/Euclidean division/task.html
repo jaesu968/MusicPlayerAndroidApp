@@ -1,0 +1,59 @@
+<div class="step-text">
+<p>In this topic, you will explore the approach to division in Kotlin. You will learn how to <a class="theory-lookup not-relevant" href="/learn/step/22102" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, `apply` is a scope function that can be used to call methods on an object while returning the object itself. | It is often used for configuration purposes, as it provides a fluent and concise way to set properties and call methods on an object. The object on which `apply` is invoked becomes the receiver of the block's code, and the `this` keyword inside the block refers to this object. After executing the block, the `apply` function returns the object, making it convenient to chain multiple method calls.">apply</a> division to positive and negative numbers. In addition, we will talk about several built-in Kotlin functions that you can use to perform division.</p>
+<h5 id="division-with-positive-numbers">Division with positive numbers</h5>
+<p>Before we start writing code, let's figure out what the <a class="theory-lookup not-relevant" href="/learn/step/22102" rel="noopener noreferrer nofollow" target="_blank" title="In Kotlin, a Euclidean division is a type of division that represents a number (the dividend) as the product of another number (the divisor) and a quotient, plus a remainder. | The dividend is the number being divided, the divisor is the number it is being divided by, the quotient is the result of the division, and the remainder is the value that is left over after the division is performed. The formula for Euclidean division is: dividend = divisor \* quotient + remainder
+
+In Kotlin, the remainder is calculated as the dividend minus the divisor times the quotient.">Euclidean division</a> formula is. With it, any number can be represented by three others. If we denote the initial number as the <strong>dividend</strong>, the formula looks like this:</p>
+<p><strong>dividend = divisor * quotient + remainder</strong></p>
+<p>Now, let's understand how to get the <strong>quotient</strong> and <strong>remainder</strong> values with the dividend = 16 and the divisor = 5. </p>
+<pre><code class="language-kotlin">val quotient = 16 / 5
+val remainder = 16 % 5
+
+println("The quotient is: " + quotient) // The quotient is: 3
+println("The remainder is: " + remainder) // The remainder is: 1</code></pre>
+<p>Using this knowledge, let's check if the calculation is correct:</p>
+<pre><code class="language-kotlin">// The dividend = 5 * 3 + 1
+print("The dividend = " + (divisor * quotient + remainder)) // The dividend = 16
+</code></pre>
+<p>Note that in both examples we get a whole number when dividing with the <code class="language-kotlin">/</code> operator, since we're working with the <code class="language-kotlin">Int</code> type.</p>
+<h5 id="division-with-negative-numbers">Division with negative numbers</h5>
+<p>In the previous section, we operated with positive numbers; now let's apply the same algorithm to a negative number (-13) with 4 as the divisor. As you already know, there are several division types. Kotlin uses <strong>T-division</strong> by default. Let's recap what is it:</p>
+<pre><code class="language-kotlin">val quotient: Int  = -13 / 4
+val remainder: Int = -13 % 4
+
+println("The quotient is: " + quotient) // The quotient is: -3
+println("The remainder is: " + remainder) // The remainder is: -1
+print("The dividend = " + (4 * (-3) + (-1)) // The dividend = -13</code></pre>
+<p>Here, the dividend is a negative number. The division result is: -13 / 4 = -3.25 . If you truncate the fraction part of the result, you receive -3. So, the quotient is -3.<br/>Let's calculate the remainder now! As you know, <strong>remainder = dividend - divisor * quotient </strong>. In our case: </p>
+<p>-13 - 4 * (-3) = -13 + 12 = -1<br/>As you can see, everything is correct. Let's look at how it works with different signs: </p>
+<table align="center" border="1" cellpadding="1" cellspacing="1" style="width: 500px;"><tbody><tr><td><p>Expression</p></td><td><p>Quotient</p><p>(/ result)  </p></td><td><p>Remainder</p><p>(% result)    </p></td><td><p>The result</p></td></tr><tr><td><p>-13 / 4</p></td><td><p>-3</p></td><td><p>-1</p></td><td><p>-13 = 4 * (-3) + (-1) </p></td></tr><tr><td><p>13 / -4</p></td><td><p>-3</p></td><td><p>1</p></td><td><p>13 = (-4) * (-3) + 1 </p></td></tr><tr><td><p>-13 / -4</p></td><td><p>3</p></td><td><p>-1</p></td><td><p>-13 = (-4) * 3 + (-1) </p></td></tr></tbody></table>
+<p>You don't have to memorize the signs! Just knowing how it works is enough.</p>
+<p>Below are some division examples in Kotlin:</p>
+<pre><code class="language-kotlin">println(11 / -4)   // prints -2
+println(11 % -4)   // prints 3
+println(-11 / 4)   // prints -2
+println(-11 % 4)   // prints -3
+println(-11 / -4)  // prints 2
+println(-11 % -4)  // prints -3</code></pre>
+<h5 id="another-way-to-divide-numbers">Another way to divide numbers</h5>
+<p>As you know, languages like Python use another type of division, <strong>F-division</strong>. In Kotlin, you can work with this division approach using the <code class="language-kotlin">floorDiv()</code> and <code class="language-kotlin">mod()</code> functions. Let's see how it works:</p>
+<pre><code class="language-kotlin">println((-12).floorDiv(5)) // -3
+println((-12).mod(5))      // 3</code></pre>
+<p>When you divide -12 by 5, the result is -2.4, which is rounded to -3, since it is the nearest whole number smaller than -2.4.</p>
+<p>You can calculate the remainder by the familiar formula: <strong>remainder = dividend - divisor * quotient</strong>. In our case: </p>
+<p>-12 - 5 * (-3) = -12 + 15 = 3</p>
+<p>If the <code class="language-kotlin">mod()</code> function operated similarly in all cases, we would face issues when performing Euclidean division. When both numbers have the same sign, this function performs similarly to the <code class="language-kotlin">%</code> operator:</p>
+<table align="center" border="1" cellpadding="1" cellspacing="1" style="width: 600px;"><tbody><tr><td><p>Expression</p></td><td><p>Quotient</p><p>(<code class="language-kotlin">floorDiv</code> result)</p></td><td><p>Remainder</p><p>(<code class="language-kotlin">mod</code> result)</p></td><td><p>The result</p></td></tr><tr><td><p>-12 / 5</p></td><td><p>-3</p></td><td><p>3</p></td><td><p>-12 = 5 * (-3) + 3 </p></td></tr><tr><td><p>12 / -5</p></td><td><p>-3</p></td><td><p>-3</p></td><td><p>12 = (-5) * (-3) + (-3) </p></td></tr><tr><td><p>-12 / -5</p></td><td><p>2</p></td><td><p>-2</p></td><td><p>-12 = (-5) * 2 + (-2) </p></td></tr></tbody></table>
+<p>Below are some division examples in Kotlin:</p>
+<pre><code class="language-kotlin">println(11.floorDiv(4))     // prints 2
+println(11.mod(4))          // prints 3
+println(11.floorDiv(-4))    // prints -3
+println(11.mod(-4))         // prints -1
+println((-11).floorDiv(4))  // prints -3
+println((-11).mod(4))       // prints 1
+println((-11).floorDiv(-4)) // prints 2
+println((-11).mod(-4))      // prints -3</code></pre>
+<p>As you can see, with positive numbers, the <code class="language-kotlin">floorDiv()</code> and <code class="language-kotlin">mod()</code> functions operate the same way as <code class="language-kotlin">/</code> and <code class="language-kotlin">%</code> respectively.</p>
+<h5 id="conclusion">Conclusion</h5>
+<p>In this topic, you've explored the division formula. You've found out how to apply it to positive and negative numbers. Now it's time to check your knowledge. Move on to the practice section and check out the tasks. Good luck!</p>
+</div>

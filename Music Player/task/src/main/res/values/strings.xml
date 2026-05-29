@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Music Player</string>
+    <string name="hello">Hello new project!</string>
+    <string name="welcome_to_music_player">Welcome to Music Player</string>
+    <string name="_00_00">00:00</string>
+    <string name="play_pause">play/pause</string>
+    <string name="stop">stop</string>
+    <string name="add_playlist">Add Playlist</string>
+    <string name="load_playlist">Load Playlist</string>
+    <string name="delete_playlist">Delete Playlist</string>
+    <string name="search">search</string>
+    <string name="song_name">Song Name</string>
+    <string name="song_title">Song Title</string>
+    <string name="artist">Artist</string>
+    <string name="play_or_pause">Play or Pause</string>
+    <string name="playlist_name">Playlist Name</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+</resources>

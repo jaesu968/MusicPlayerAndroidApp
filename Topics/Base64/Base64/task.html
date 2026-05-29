@@ -1,0 +1,151 @@
+<div class="step-text">
+<p>Additional instruments - Cryptography and Encoding</p>
+<p>Most people prefer working with readable text, while computer storage and communications operate exclusively in bytes. This leads us to the concept of encoding—a crucial process that converts text into binary. Among the numerous encoding schemes, Base64 stands out, as it allows the conversion of <a class="theory-lookup not-relevant" href="/learn/step/35276" target="_blank" title="In Kotlin, binary data refers to data that is represented in a binary format, using only two digits, 0 and 1. | Binary data is commonly used in computing because it is the most basic form of data representation and can be easily processed by computers. In Kotlin, you can manipulate individual bits of binary data using various operators, which are useful in low-level programming tasks such as device drivers, graphics, network communication, and encryption. Additionally, binary data is often converted into a readable text format using encoding schemes such as Base64. Base64 encoding allows binary data to be converted into text using a set of 64 ASCII symbols, making it easier to store and transmit binary data as text. This is particularly useful when working with image data, which is typically stored in binary format.">binary data</a> into text using a set of 64 ASCII symbols. In this topic, we will explore Base64 encoding and decoding in Kotlin, providing you with the ability to encode and decode data with ease.</p>
+<h5 id="base64-from-kotlin">Base64 from Kotlin</h5>
+<p>The use of <code class="language-kotlin">Base64</code> from <code class="language-kotlin">kotlin.io.encoding</code> is illustrated in the following example:</p>
+<pre><code class="language-kotlin">import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
+
+@OptIn(ExperimentalEncodingApi::class)
+fun main() {
+    val text = "Hola!"
+    val encodedText = Base64.Default.encode(text.toByteArray())
+    println(encodedText) // SG9sYSE=
+}</code></pre>
+<p> Let's break it down:</p>
+<ul>
+<li>The <code class="language-kotlin">@OptIn(ExperimentalEncodingApi::class)</code> annotation is used to indicate that the following code makes use of an experimental API. In this case, it's used to inform the compiler that the <code class="language-kotlin">Base64</code> encoding methods are being used, which are still considered experimental features that might change in the future.</li>
+<li>Here, the <code class="language-kotlin">Base64</code> class is not supposed to be instantiated or inherited, so we used <code class="language-kotlin">Default</code>, as the companion object <code class="language-kotlin"><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.io.encoding/-base64/-default/index.html" rel="noopener noreferrer nofollow" target="_blank">Base64.Default</a></code> is the default instance of <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.io.encoding/-base64/index.html" rel="noopener noreferrer nofollow" target="_blank">Base64</a>. We can also use <code class="language-kotlin">Base64.UrlSafe</code> and <code class="language-kotlin">Base64.Mime</code>.</li>
+</ul>
+<pre><code class="language-kotlin">@OptIn(ExperimentalEncodingApi::class)
+fun main() {
+    val text = "Hola!"
+    val encodedText = Base64.Default.encode(text.toByteArray())
+    println(encodedText) // SG9sYSE=
+    println(String(Base64.Default.decode(encodedText))) // Hola!
+}</code></pre>
+<p>Below is an example of <code class="language-kotlin">UrlSafe</code> encoding:</p>
+<pre><code class="language-kotlin">import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
+
+@OptIn(ExperimentalEncodingApi::class)
+fun main() {
+    val url = "https://hyperskill.org/study-plan"
+    val encodedText: String = Base64.UrlSafe.encode(url.toByteArray())
+    println(encodedText) // aHR0cHM6Ly9oeXBlcnNraWxsLm9yZy9zdHVkeS1wbGFu
+}</code></pre>
+<p>And here's a decoding example:</p>
+<pre><code class="language-kotlin">import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
+
+@OptIn(ExperimentalEncodingApi::class)
+fun main() {
+    val url = "https://hyperskill.org/study-plan"
+    val encodedText: String = Base64.UrlSafe.encode(url.toByteArray())
+    println(encodedText) // aHR0cHM6Ly9oeXBlcnNraWxsLm9yZy9zdHVkeS1wbGFu
+    println(String(Base64.UrlSafe.decode(encodedText)))
+}</code></pre>
+<h5 id="basic-encoding-and-decoding">Basic encoding and decoding</h5>
+<p>Let's encode text using <code class="language-kotlin">Base64</code> from <code class="language-kotlin">java.util</code>:</p>
+<pre><code class="language-kotlin">import java.util.Base64
+
+fun main() {
+    val text = "Hola!"
+    val encodedText: String = Base64.getEncoder().encodeToString(text.toByteArray())
+    println(encodedText) // SG9sYSE=
+
+}</code></pre>
+<p><code class="language-kotlin">Base64</code> is a class from the <code class="language-kotlin">java.util</code> package that provides static methods for encoding and decoding data using Base64.</p>
+<p>Quoting official docs, "The <code class="language-kotlin">encodeToString()</code> encodes the specified byte array into a String using the Base64 encoding scheme. This method first encodes all input bytes into a Base64-encoded byte array and then constructs a new String by using the encoded byte array and the ISO-8859-1 charset."</p>
+<p>Now let's decode it:</p>
+<pre><code class="language-kotlin">fun main() {
+    val text = "Hola!"
+    val encodedText: String = Base64.getEncoder().encodeToString(text.toByteArray())
+    println(encodedText) // SG9sYSE=
+    val decodedText = String(Base64.getDecoder().decode(encodedText))
+    println(decodedText) // Hola!
+}</code></pre>
+<p>For simplicity, let's break it down:</p>
+<ul>
+<li><code class="language-kotlin">Base64.getDecoder()</code> returns an instance of the Base64 decoder.</li>
+<li><code class="language-kotlin">decode(encodedText)</code> takes the Base64-encoded text as input, decodes it back to the original binary data, and returns a byte array.</li>
+<li><code class="language-kotlin">String(...)</code> converts the byte array back into a string using the appropriate character encoding (UTF_8 in this case).</li>
+</ul>
+<h5 id="base64-url-encoding">Base64 URL encoding</h5>
+<p>Let's take an example:</p>
+<pre><code class="language-kotlin">import java.util.Base64
+
+fun main() {
+    val url = "https://hyperskill.org/study-plan"
+    val encodedUri = Base64.getUrlEncoder().encode(url.toByteArray())
+    println(String(encodedUri)) // aHR0cHM6Ly9oeXBlcnNraWxsLm9yZy9zdHVkeS1wbGFu
+}</code></pre>
+<ul>
+<li><code class="language-kotlin">getUrlEncoder()</code>: Returns a <code class="language-kotlin">Base64.Encoder</code> that encodes using the URL and Filename safe type Base64 encoding scheme.</li>
+</ul>
+<p>Here's how to decode it back:</p>
+<pre><code class="language-kotlin">fun main() {
+    val url = "https://hyperskill.org/study-plan"
+    val encodedUri = Base64.getUrlEncoder().encode(url.toByteArray())
+    println(String(encodedUri)) // aHR0cHM6Ly9oeXBlcnNraWxsLm9yZy9zdHVkeS1wbGFu
+    println(String(Base64.getUrlDecoder().decode(encodedUri))) // https://hyperskill.org/study-plan
+}</code></pre>
+<h5 id="base64-mime-encoding">Base64 MIME encoding</h5>
+<p>MIME (Multipurpose Internet Mail Extensions) is a standard that defines how data is formatted and transmitted over the Internet. It is used to identify the type of data being sent, such as text, image, or audio.</p>
+<p>The encoded output must be represented in lines of no more than 76 characters each. The line separator is a carriage return (<code class="language-kotlin">\r</code>) followed immediately by a linefeed (<code class="language-kotlin">\n</code>). No line separator is added to the end of the encoded output. All line separators or other characters not found in the Base64 alphabet table are ignored in the decoding operation.</p>
+<p>Let's take an example:</p>
+<pre><code class="language-kotlin">import java.util.Base64
+
+fun main() {
+    val mime = "k333d6ebc30f8a22d993-0iikik3-4fc3-a9b1-949b2d5463ddk333d6ebc30f8a22d993-0iikik3-4fc3-a9b1-949b2d5463ddk333d6ebc30f8a22d993-0iikik3-4fc3-a9b1-949b2d5463dd"
+    val encodedMime = Base64.getMimeEncoder().encodeToString(mime.toByteArray())
+    println(encodedMime)
+}
+</code></pre>
+<p> The output:</p>
+<pre><code class="language-kotlin">azMzM2Q2ZWJjMzBmOGEyMmQ5OTMtMGlpa2lrMy00ZmMzLWE5YjEtOTQ5YjJkNTQ2M2RkazMzM2Q2
+ZWJjMzBmOGEyMmQ5OTMtMGlpa2lrMy00ZmMzLWE5YjEtOTQ5YjJkNTQ2M2RkazMzM2Q2ZWJjMzBm
+OGEyMmQ5OTMtMGlpa2lrMy00ZmMzLWE5YjEtOTQ5YjJkNTQ2M2Rk</code></pre>
+<p>We simply used <code class="language-kotlin">getMimeEncoder()</code> to encode it. That's it.</p>
+<h5 id="using-apache-commons-codec">Using Apache Commons Codec</h5>
+<p>First, we need to add the following <a href="https://mvnrepository.com/artifact/commons-codec/commons-codec" rel="noopener noreferrer nofollow" target="_blank">dependency</a>:</p>
+<details><summary>Maven</summary><summary></summary>
+<pre><code class="language-kotlin">&lt;!-- https://mvnrepository.com/artifact/commons-codec/commons-codec --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;commons-codec&lt;/groupId&gt;
+    &lt;artifactId&gt;commons-codec&lt;/artifactId&gt;
+    &lt;version&gt;1.16.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+</details>
+<details><summary>Gradle</summary>
+<pre><code class="language-kotlin">implementation group: 'commons-codec', name: 'commons-codec', version: '1.16.0'</code></pre>
+</details>
+<details><summary>Gradle(Kotlin)</summary>
+<pre><code class="language-kotlin">// https://mvnrepository.com/artifact/commons-codec/commons-codec
+implementation("commons-codec:commons-codec:1.16.0")</code></pre>
+<p> </p>
+</details>
+<p>Now let's rewrite one of the previous examples using Apache Commons Codec:</p>
+<pre><code class="language-kotlin">import org.apache.commons.codec.binary.Base64
+
+fun main() {
+    val text = "Hola!"
+    val encodedText: String = String(Base64.encodeBase64(text.toByteArray()))
+    println(encodedText) // SG9sYSE=
+
+}</code></pre>
+<p>It's the same as before, but in this case, we used <code class="language-kotlin">Base64</code> from <code class="language-kotlin">org.apache.commons.codec.binary</code>.</p>
+<p>Decoding also goes in the same way:</p>
+<pre><code class="language-kotlin">import org.apache.commons.codec.binary.Base64
+
+fun main() {
+    val text = "Hola!"
+    val encodedText: String = String(Base64.encodeBase64(text.toByteArray()))
+    println(encodedText) // SG9sYSE=
+    println(String(Base64.decodeBase64(encodedText))) // Hola!
+
+}</code></pre>
+<h5 id="conclusion">Conclusion</h5>
+<p>In this topic, we've learned how to decode and encode using the Base64 schema. We've also discussed some use cases, such as basic, URL, and MIME encoding. We've found out how to work with Base64 from <code class="language-kotlin">java.util</code>, <code class="language-kotlin">kotlin.io.encoding</code>, and <code class="language-kotlin">org.apache.commons.codec.binary</code>. Now let's practice!</p>
+</div>

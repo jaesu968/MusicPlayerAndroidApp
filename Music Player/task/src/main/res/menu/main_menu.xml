@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Creates a new playlist from currently loaded songs. -->
+    <item
+        android:id="@+id/mainMenuAddPlaylist"
+        android:title="@string/add_playlist" />
+    <!-- Opens a dialog to pick a saved playlist to load. -->
+    <item
+        android:id="@+id/mainMenuLoadPlaylist"
+        android:title="@string/load_playlist" />
+    <!-- Opens a dialog to pick a saved playlist to delete. -->
+    <item
+        android:id="@+id/mainMenuDeletePlaylist"
+        android:title="@string/delete_playlist" />
+</menu>
